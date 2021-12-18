@@ -1,0 +1,89 @@
+{
+  "variants": {
+    "stage=0": [
+      {
+        "model": "gradualgrass:block/gradual_grass_0"
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_0",
+        "y": 90
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_0",
+        "y": 180
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_0",
+        "y": 270
+      }
+    ],
+    "stage=1": [
+      {
+        "model": "gradualgrass:block/gradual_grass_1"
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_1",
+        "y": 90
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_1",
+        "y": 180
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_1",
+        "y": 270
+      }
+    ],
+    "stage=2": [
+      {
+        "model": "gradualgrass:block/gradual_grass_2"
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_2",
+        "y": 90
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_2",
+        "y": 180
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_2",
+        "y": 270
+      }
+    ],
+    "stage=3": [
+      {
+        "model": "gradualgrass:block/gradual_grass_3"
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_3",
+        "y": 90
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_3",
+        "y": 180
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_3",
+        "y": 270
+      }
+    ],
+    "stage=4": [
+      {
+        "model": "gradualgrass:block/gradual_grass_4"
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_4",
+        "y": 90
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_4",
+        "y": 180
+      },
+      {
+        "model": "gradualgrass:block/gradual_grass_4",
+        "y": 270
+      }
+    ]
+  }
+}
