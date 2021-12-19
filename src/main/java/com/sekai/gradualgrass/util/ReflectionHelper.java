@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 import java.lang.reflect.Field;
 
 public class ReflectionHelper {
-    public static void fixGrass() {
+    /*public static void fixGrass() {
         Field grassFieldFeature = ObfuscationReflectionHelper.findField(Features.States.class, "field_244081_t");//field_215411_h
         Field grassFieldSurface = ObfuscationReflectionHelper.findField(SurfaceBuilder.class, "field_215411_h");
         grassFieldFeature.setAccessible(true);
@@ -18,5 +18,5 @@ public class ReflectionHelper {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

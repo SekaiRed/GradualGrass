@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "com.sekai.gradualgrass.mixin",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinSpreadable"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "gradualgrass.refmap.json",
+  "minVersion": "0.8"
+}

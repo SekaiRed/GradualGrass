@@ -35,8 +35,8 @@ public class RegistryHandler {
         MOD_BLOCKS.register(FMLJavaModLoadingContext.get().getModEventBus());
     }
 
-    public static final RegistryObject<Block> REP_GRASS_BLOCK = REP_BLOCKS.register("grass_block", () -> new ReplacedGrassBlock(AbstractBlock.Properties.of(Material.GRASS).randomTicks().strength(0.6F).sound(SoundType.GRASS)));
-    public static final RegistryObject<Item> REP_GRASS_BLOCK_ITEM = REP_ITEMS.register("grass_block", () -> new BlockItem(REP_GRASS_BLOCK.get(), new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)));
+    /*public static final RegistryObject<Block> REP_GRASS_BLOCK = REP_BLOCKS.register("grass_block", () -> new ReplacedGrassBlock(AbstractBlock.Properties.of(Material.GRASS).randomTicks().strength(0.6F).sound(SoundType.GRASS)));
+    public static final RegistryObject<Item> REP_GRASS_BLOCK_ITEM = REP_ITEMS.register("grass_block", () -> new BlockItem(REP_GRASS_BLOCK.get(), new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)));*/
 
     public static final RegistryObject<Block> GRADUAL_GRASS_BLOCK = MOD_BLOCKS.register("gradual_grass_block", () -> new GradualGrassBlock(AbstractBlock.Properties.of(Material.GRASS).randomTicks().strength(0.55F).sound(SoundType.GRAVEL)));
     //public static final RegistryObject<Item> MOD_GRASS_BLOCK_ITEM = REP_ITEMS.register("grass_block", () -> new BlockItem(GRADUAL_GRASS_BLOCK.get(), new Item.Properties()));

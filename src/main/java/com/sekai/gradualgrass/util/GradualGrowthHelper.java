@@ -5,12 +5,18 @@ import com.sekai.gradualgrass.config.GradualGrassConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SnowBlock;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.FluidTags;
+import net.minecraft.util.Direction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IWorldReader;
+import net.minecraft.world.lighting.LightEngine;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.Tags;
 
 import java.util.List;
+import java.util.Random;
 
 import static com.sekai.gradualgrass.blocks.GradualGrassBlock.FINAL_STAGE;
 import static com.sekai.gradualgrass.blocks.GradualGrassBlock.STAGE;
@@ -31,8 +37,10 @@ public class GradualGrowthHelper {
             int stage = target.getValue(STAGE);
             if (isLastState(stage)) {
                 //Only grow up to grass if the source is a grass block
-                if(source.getBlock().is(RegistryHandler.REP_GRASS_BLOCK.get()))
-                    newGrassState = RegistryHandler.REP_GRASS_BLOCK.get().defaultBlockState();
+                /*if(source.getBlock().is(RegistryHandler.REP_GRASS_BLOCK.get()))
+                    newGrassState = RegistryHandler.REP_GRASS_BLOCK.get().defaultBlockState();*/
+                if(source.is(Blocks.GRASS_BLOCK))
+                    newGrassState = Blocks.GRASS_BLOCK.defaultBlockState();
                 else
                     newGrassState = null;
             } else {
@@ -94,5 +102,53 @@ public class GradualGrowthHelper {
         }
 
         return state;
+    }
+
+    public static void randomTick(BlockState state, ServerWorld serverWorld, BlockPos pos, Random random) {
+        if (!canBeGrass(state, serverWorld, pos)) {
+            if (!serverWorld.isAreaLoaded(pos, 3)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light and spreading
+            serverWorld.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
+        } else {
+            if (serverWorld.getMaxLocalRawBrightness(pos.above()) >= 9) {
+                for(int i = 0; i < GradualGrassConfig.growthRoll; ++i) {
+                    //BlockPos targetPos = pos.offset(random.nextInt(3) - 1, random.nextInt(5) - 3, random.nextInt(3) - 1);
+                    BlockPos targetPos = applyRandomOffset(pos, random);
+                    BlockState blockstate = GradualGrowthHelper.getGrownState(state, serverWorld.getBlockState(targetPos));
+                    if (blockstate != null && GradualGrassConfig.growthChance > random.nextDouble() && isValidGrowthTarget(serverWorld.getBlockState(targetPos)) && canPropagate(blockstate, serverWorld, targetPos)) {
+                        serverWorld.setBlockAndUpdate(targetPos, blockstate);
+                    }
+                }
+            }
+        }
+    }
+
+    private static BlockPos applyRandomOffset(BlockPos pos, Random random) {
+        return pos.offset(
+                GradualGrassConfig.growthRangeMinX + random.nextInt(GradualGrassConfig.growthRangeMaxX - GradualGrassConfig.growthRangeMinX + 1),
+                GradualGrassConfig.growthRangeMinY + random.nextInt(GradualGrassConfig.growthRangeMaxY - GradualGrassConfig.growthRangeMinY + 1),
+                GradualGrassConfig.growthRangeMinZ + random.nextInt(GradualGrassConfig.growthRangeMaxZ - GradualGrassConfig.growthRangeMinZ + 1));
+    }
+
+    private static boolean canBeGrass(BlockState p_220257_0_, IWorldReader p_220257_1_, BlockPos p_220257_2_) {
+        BlockPos blockpos = p_220257_2_.above();
+        BlockState blockstate = p_220257_1_.getBlockState(blockpos);
+        if (blockstate.is(Blocks.SNOW) && blockstate.getValue(SnowBlock.LAYERS) == 1) {
+            return true;
+        } else if (blockstate.getFluidState().getAmount() == 8) {
+            return false;
+        } else {
+            int i = LightEngine.getLightBlockInto(p_220257_1_, p_220257_0_, p_220257_2_, blockstate, blockpos, Direction.UP, blockstate.getLightBlock(p_220257_1_, blockpos));
+            return i < p_220257_1_.getMaxLightLevel();
+        }
+    }
+
+    private static boolean canPropagate(BlockState blockState, IWorldReader reader, BlockPos pos) {
+        //return true;
+        BlockPos blockpos = pos.above();
+        return canBeGrass(blockState, reader, pos) && !reader.getFluidState(blockpos).is(FluidTags.WATER);
+    }
+
+    private static boolean isValidGrowthTarget(BlockState state) {
+        return state.is(Blocks.DIRT) || state.is(RegistryHandler.GRADUAL_GRASS_BLOCK.get());
     }
 }
