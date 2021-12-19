@@ -1,6 +1,5 @@
 package com.sekai.gradualgrass.util;
 
-import com.sekai.gradualgrass.blocks.ReplacedGrassBlock;
 import com.sekai.gradualgrass.config.GradualGrassConfig;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
